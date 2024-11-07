@@ -11,3 +11,6 @@ class Controller:
         self.model.set_text(input_text)
         greet = f'Hello {self.model.get_text()}'
         self.view.display_greeting(greet)
+
+    def delet(self):
+        self.view.output.clear()

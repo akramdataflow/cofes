@@ -1,5 +1,5 @@
 from model import Model
-from view import MyApp
+from view import MyApp, Main
 
 class Controller:
     def __init__(self):
@@ -14,3 +14,12 @@ class Controller:
 
     def delet(self):
         self.view.output.clear()
+
+
+
+class Controller_main:
+    def __init__(self):
+        self.view = Main(self)
+
+    def greet(self, data):
+        print('button is clicked', data)

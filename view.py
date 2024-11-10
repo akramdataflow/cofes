@@ -1,6 +1,6 @@
 from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QPushButton, QTextEdit
-
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QPushButton, QTextEdit, QMainWindow, QSlider
+from PySide6.QtCore import Qt
 
 
 class MyApp(QWidget):
@@ -68,3 +68,26 @@ class MyApp(QWidget):
 
     def display_greeting(self, greeting):
         self.output.setText(greeting)
+
+
+class Main(QMainWindow):
+    def __init__(self, controller_main):
+        super().__init__()
+        self.controller = controller_main
+        self.setWindowTitle('main')
+        slider = QSlider(Qt.Orientation.Horizontal)
+        slider.setMinimum(0)
+        slider.setMaximum(100)
+        slider.setValue(10)
+
+        slider.valueChanged.connect(self.controller.greet)
+
+        self.setCentralWidget(slider)
+        
+
+
+
+    
+        
+
+

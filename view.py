@@ -82,6 +82,7 @@ class Main(QMainWindow):
 
         slider.valueChanged.connect(self.controller.greet)
 
+
         self.setCentralWidget(slider)
         
 

@@ -1,94 +1,268 @@
-from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QPushButton, QTextEdit, QMainWindow, QSlider
-from PySide6.QtCore import Qt
+from PySide6.QtGui import QScreen, QIcon
+from PySide6.QtWidgets import QGridLayout, QMainWindow, QApplication, QFrame, QPushButton, QSizePolicy, QLabel
+from PySide6.QtCore import Qt, QSize
 
 
-class MyApp(QWidget):
-    def __init__(self, controller):
+class MyApp(QMainWindow):
+    def __init__(self, controller=None):
         super().__init__()
         self.controller = controller
-        self.setWindowTitle('Testing')
-        self.setWindowIcon(QIcon('google-maps.png'))
-        self.resize(300, 200)
+        self.setWindowTitle('لنكيدو')
 
-        layout = QVBoxLayout()
-        self.setLayout(layout)
+        # الحصول على أبعاد الشاشة
+        screen = QApplication.primaryScreen()
+        screen_geometry = screen.geometry()
+        screen_width = screen_geometry.width()
+        screen_height = screen_geometry.height()
 
-        self.inputField = QLineEdit()
-        button = QPushButton('&Say Hello')
-        button.clicked.connect(self.controller.sayHello)
-        self.output = QTextEdit()
-        self.output.setReadOnly(True)
-        delet_button = QPushButton('&Delet')
-        delet_button.clicked.connect(self.controller.delet)
+        self.resize(screen_width, screen_height)
 
+        # إنشاء إطار رئيسي وإضافة التخطيط عليه
+        main_frame = QFrame(self)
+        layout = QGridLayout(main_frame)
+        self.setCentralWidget(main_frame)
 
-        button.setStyleSheet("""
-            QPushButton {
-                background-color: #4CAF50; /* Green background */
-                color: white; /* White text */
-                border: none; /* No border */
-                padding: 10px 20px; /* Some padding */
-                text-align: center; /* Center text */
-                text-decoration: none; /* No underline */
-                display: inline-block; /* Inline-block display */
-                font-size: 16px; /* Font size */
-                margin: 4px 2px; /* Margin */
-                cursor: pointer; /* Pointer cursor on hover */
-                border-radius: 5px; /* Rounded corners */
-            }
-            QPushButton:hover {
-                background-color: #45a049; /* Darker green on hover */
+        # إنشاء فريم علوي
+        frame = QFrame()
+        layout_frame = QGridLayout(frame)  # إنشاء تخطيط خاص بالفريم
+        frame.setStyleSheet("""
+            QFrame {
+                background-color: #1A3654; 
             }
         """)
 
-        delet_button.setStyleSheet("""
-            QPushButton {
-                background-color: #47D685; /* Green background */
-                color: white; /* White text */
-                border: none; /* No border */
-                padding: 10px 20px; /* Some padding */
-                text-align: center; /* Center text */
-                text-decoration: none; /* No underline */
-                display: inline-block; /* Inline-block display */
-                font-size: 16px; /* Font size */
-                margin: 4px 2px; /* Margin */
-                cursor: pointer; /* Pointer cursor on hover */
-                border-radius: 5px; /* Rounded corners */
+        # إنشاء التسمية وإضافتها إلى التخطيط الخاص بالفريم
+        label = QLabel('لنكيدو')
+        label.setStyleSheet("""
+            QLabel {
+                color: #50F296; /* تغيير لون النص */
+                font-size: 50px; /* تغيير حجم النص */
+                font-weight: bold; /* جعل النص عريضًا */
             }
-            QPushButton:hover {
-                background-color: #435160; /* Darker green on hover */
+        """)
+        label.setAlignment(Qt.AlignCenter)  # محاذاة النص إلى المنتصف
+        layout_frame.addWidget(label, 0, 0)
+
+
+        label = QLabel('RESTAURANT <span style="color: #50F296;">&</span> CAFE')
+        label.setStyleSheet("""
+            QLabel {
+                color: #fff; /* تغيير لون النص الافتراضي */
+                font-size: 50px; /* تغيير حجم النص */
+                font-weight: bold; /* جعل النص عريضًا */
+            }
+        """)
+        label.setAlignment(Qt.AlignCenter)  # محاذاة النص إلى المنتصف
+        layout_frame.addWidget(label, 1, 0)
+
+        
+        
+
+        # إضافة الفريم العلوي إلى التخطيط الرئيسي
+        layout.addWidget(frame, 0, 0)
+        # تمديد الفريم العلوي بنسبة 1
+        layout.setRowStretch(0, 1)
+
+        # إنشاء فريم يحتوي على شبكة الأزرار
+        frame1 = QFrame()
+        layout_frame1 = QGridLayout(frame1)
+        frame1.setStyleSheet("""
+            QFrame {
+                background-color: #fff; /* لون خلفية الفريم */
             }
         """)
 
-        layout.addWidget(self.inputField)
-        layout.addWidget(button)
-        layout.addWidget(self.output)
-        layout.addWidget(delet_button)
+        # تقليل المسافات بين الأزرار
+        layout_frame1.setSpacing(10)
+        layout_frame1.setContentsMargins(10, 10, 10, 10)
 
-    def display_greeting(self, greeting):
-        self.output.setText(greeting)
+        # إنشاء الأزرار يدويًا
+        icon = QIcon('./static/Polygon 7.svg')  # Replace with your icon path
 
+        button1 = QPushButton()
+        button1.setStyleSheet("""
+            QPushButton {
+                background-color: #FFF;
+                font-size: 16px;
+                border-radius: 5px;
+                padding: 10px;
+                background-image: url('./static/اضافة مواد.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            QPushButton:hover {
+                background-color: #E9FDF2;
+            }
+        """)
+        button1.setIcon(icon)
+        button1.setIconSize(QSize(250, 250))
+        button1.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        layout_frame1.addWidget(button1, 0, 0)
 
-class Main(QMainWindow):
-    def __init__(self, controller_main):
-        super().__init__()
-        self.controller = controller_main
-        self.setWindowTitle('main')
-        slider = QSlider(Qt.Orientation.Horizontal)
-        slider.setMinimum(0)
-        slider.setMaximum(100)
-        slider.setValue(10)
+        button2 = QPushButton()
+        button2.setStyleSheet(
+            '''QPushButton {
+                background-color: #FFF;
+                font-size: 16px;
+                border-radius: 5px;
+                padding: 10px;
+                background-image: url('./static/الطلبات.png');
+                background-repeat: no-repeat;
+                background-position: center;
+    }
+    QPushButton:hover {
+        background-color: #E9FDF2;
+    }'''
+        )
+        button2.setIcon(icon)
+        button2.setIconSize(QSize(250, 250))
+        button2.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        layout_frame1.addWidget(button2, 0, 1)
 
-        slider.valueChanged.connect(self.controller.greet)
-
-
-        self.setCentralWidget(slider)
+        button3 = QPushButton()
+        button3.setStyleSheet(
+            '''QPushButton {
+                background-color: #FFF;
+                font-size: 16px;
+                border-radius: 5px;
+                padding: 10px;
+                background-image: url('./static/اضافة طلب.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            QPushButton:hover {
+                background-color: #E9FDF2;
+            }'''
+        )
+        button3.setIcon(icon)
+        button3.setIconSize(QSize(250, 250))
+        button3.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         
+        layout_frame1.addWidget(button3, 0, 2)
 
+        button4 = QPushButton()
+        button4.setStyleSheet('''QPushButton {
+                background-color: #FFF;
+                font-size: 16px;
+                border-radius: 5px;
+                padding: 10px;
+                background-image: url('./static/تحليل المبيعات.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            QPushButton:hover {
+                background-color: #E9FDF2;
+            }''')
+        button4.setIcon(icon)
+        button4.setIconSize(QSize(250, 250))
+        button4.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        layout_frame1.addWidget(button4, 1, 0)
 
+        button5 = QPushButton()
+        button5.setStyleSheet(
+            '''QPushButton {
+                background-color: #FFF;
+                font-size: 16px;
+                border-radius: 5px;
+                padding: 10px;
+                background-image: url('./static/المطبخ.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            QPushButton:hover {
+                background-color: #E9FDF2;
+            }'''
+        )
+        button5.setIcon(icon)
+        button5.setIconSize(QSize(250, 250))
+        button5.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        layout_frame1.addWidget(button5, 1, 1)
 
-    
-        
+        button6 = QPushButton()
+        button6.setStyleSheet(
+            '''QPushButton {
+                background-color: #FFF;
+                font-size: 16px;
+                border-radius: 5px;
+                padding: 10px;
+                background-image: url('./static/الصالات.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            QPushButton:hover {
+                background-color: #E9FDF2;
+            }'''
+        )
+        button6.setIcon(icon)
+        button6.setIconSize(QSize(250, 250))
+        button6.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        layout_frame1.addWidget(button6, 1, 2)
+
+        button7 = QPushButton()
+        button7.setStyleSheet(
+            '''QPushButton {
+                background-color: #FFF;
+                font-size: 16px;
+                border-radius: 5px;
+                padding: 10px;
+                background-image: url('./static/الطاولات.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            QPushButton:hover {
+                background-color: #E9FDF2;
+            }'''
+        )
+        button7.setIcon(icon)
+        button7.setIconSize(QSize(250, 250))
+        button7.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        layout_frame1.addWidget(button7, 2, 0)
+
+        button8 = QPushButton()
+        button8.setStyleSheet(
+            '''QPushButton {
+                background-color: #FFF;
+                font-size: 16px;
+                border-radius: 5px;
+                padding: 10px;
+                background-image: url('./static/المخزن.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            QPushButton:hover {
+                background-color: #E9FDF2;
+            }'''
+        )
+        button8.setIcon(icon)
+        button8.setIconSize(QSize(250, 250))
+        button8.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        layout_frame1.addWidget(button8, 2, 1)
+
+        button9 = QPushButton()
+        button9.setStyleSheet(
+            '''QPushButton {
+                background-color: #FFF;
+                font-size: 16px;
+                border-radius: 5px;
+                padding: 10px;
+                background-image: url('./static/الضبط.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            QPushButton:hover {
+                background-color: #E9FDF2;
+            }'''
+        )
+        button9.setIcon(icon)
+        button9.setIconSize(QSize(250, 250))
+        button9.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        layout_frame1.addWidget(button9, 2, 2)
+
+        # إضافة فريم الأزرار إلى التخطيط الرئيسي
+        layout.addWidget(frame1, 1, 0)
+
+        # تمديد فريم الأزرار بنسبة 5
+        layout.setRowStretch(1, 5)
+        layout.setColumnStretch(0, 1)
 
 

@@ -1,5 +1,5 @@
-from PySide6.QtGui import QScreen, QIcon
-from PySide6.QtWidgets import QGridLayout, QMainWindow, QApplication, QFrame, QPushButton, QSizePolicy, QLabel
+from PySide6.QtGui import QScreen, QIcon, QPixmap
+from PySide6.QtWidgets import QGridLayout, QMainWindow, QApplication, QFrame, QPushButton, QSizePolicy, QLabel, QLineEdit,  QComboBox, QWidget
 from PySide6.QtCore import Qt, QSize
 
 
@@ -97,9 +97,11 @@ class MyApp(QMainWindow):
         button1.setIcon(icon)
         button1.setIconSize(QSize(250, 250))
         button1.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
         layout_frame1.addWidget(button1, 0, 0)
 
         button2 = QPushButton()
+        button2.clicked.connect(self.controller.show_orders_page)
         button2.setStyleSheet(
             '''QPushButton {
                 background-color: #FFF;
@@ -120,6 +122,7 @@ class MyApp(QMainWindow):
         layout_frame1.addWidget(button2, 0, 1)
 
         button3 = QPushButton()
+        button3.clicked.connect(self.controller.add_order_button_clicked)
         button3.setStyleSheet(
             '''QPushButton {
                 background-color: #FFF;
@@ -179,6 +182,7 @@ class MyApp(QMainWindow):
         layout_frame1.addWidget(button5, 1, 1)
 
         button6 = QPushButton()
+        button6.clicked.connect(self.controller.show_halls_page)
         button6.setStyleSheet(
             '''QPushButton {
                 background-color: #FFF;
@@ -199,6 +203,7 @@ class MyApp(QMainWindow):
         layout_frame1.addWidget(button6, 1, 2)
 
         button7 = QPushButton()
+        button7.clicked.connect(self.controller.show_tabelles_page)
         button7.setStyleSheet(
             '''QPushButton {
                 background-color: #FFF;
@@ -266,3 +271,570 @@ class MyApp(QMainWindow):
         layout.setColumnStretch(0, 1)
 
 
+
+
+class AddOrderPage(QMainWindow):
+    def __init__(self, controller):
+        super().__init__()
+        self.controller = controller
+        self.setWindowTitle("إضافة طلب")
+        self.resize(500, 500)
+
+        pixmap = QPixmap('./static/اضافة طلب/ايقونة اضافة الطلبات.png')
+        pixmap = pixmap.scaled(32, 32)
+        self.setWindowIcon(QIcon(pixmap))
+
+        main_frame = QFrame()
+        main_frame.setStyleSheet(
+            """
+            QFrame {
+                background-color: #1A3654; 
+            }
+            """
+        )
+        layout = QGridLayout(main_frame)
+
+        # Set the central widget properly
+        self.setCentralWidget(main_frame)
+    
+
+        header_frame = QFrame()
+
+        header_frame.setStyleSheet("""
+            QFrame {
+                background-color: #50F296; 
+                border-radius: 6px;
+                background-image: url('./static/اضافة طلب/اضافة الطلبات.png');
+                background-repeat: no-repeat;
+                background-position: right;
+                padding: 100px; 
+            }
+            """)
+
+
+        header_frame.setFixedHeight(40)
+        layout.addWidget(header_frame,0,0,1,0)
+
+
+
+
+######################################################################################################        
+        view_frame = QFrame()
+
+        view_frame.setStyleSheet("""
+            QFrame {
+                background-color: #fff; 
+                border-radius: 6px;  
+                padding: 10px;              
+            }
+            """)
+        
+
+        view_frame_layout = QGridLayout(view_frame)
+
+        label = QLabel('البحث')
+        label.setStyleSheet('''
+                color: #1A3654;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+            ''')
+        view_frame_layout.addWidget(label,0,3)
+
+
+        self.serch_line = QLineEdit()
+        self.serch_line.setStyleSheet('''
+                border-radius: 10px;
+                background: #BEB8B8;
+            ''')
+        view_frame_layout.addWidget(self.serch_line,0,2)
+
+        button1 = QPushButton('المأكولات')
+        button1.setStyleSheet('''
+                border-radius: 4px;
+                background: #50F296;
+                color: #1A3654;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+            ''')
+        
+        view_frame_layout.addWidget(button1,0,1)
+
+        button2 = QPushButton('المشروبات')
+        button2.setStyleSheet('''
+                border-radius: 4px;
+                background: #50F296;
+                color: #1A3654;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+            ''')
+        
+        view_frame_layout.addWidget(button2,0,0)
+        
+        data_frame = QFrame()
+        data_frame.setStyleSheet('''
+                border-radius: 10px;
+                background: rgba(0, 0, 0, 0.10);
+            ''')
+        view_frame_layout.addWidget(data_frame,1,0,1,4)
+
+        layout.addWidget(view_frame, 1, 0, 1, 3)
+
+
+
+
+######################################################################################################
+        add_frame = QFrame()
+        add_frame.setStyleSheet("""
+            QFrame {
+                background-color: #fff; 
+                border-radius: 6px; 
+                padding: 10px;               
+            }
+            """)
+        
+        layout.addWidget(add_frame,1,3)
+
+        add_frame_layout = QGridLayout(add_frame)
+
+        name_food_drinck_label = QLabel('اسم الأكلة او المشروب')
+        name_food_drinck_label.setStyleSheet('''
+
+                color: #1A3654;
+                text-align: right;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+
+            ''')
+        add_frame_layout.addWidget(name_food_drinck_label,0,1)
+
+
+        self.name_food_drinck_combo = QComboBox()
+        self.name_food_drinck_combo.setEditable(True)
+        self.name_food_drinck_combo.setStyleSheet('''
+                border-radius: 4px; 
+                background: #1A3654;
+                color: #fff;
+
+            ''')
+        
+        options = ["بيتزا", "شاورما", "برجر", "عصير مانجو", "عصير برتقال", "فاهيتا"]
+        self.name_food_drinck_combo.addItems(options)
+        add_frame_layout.addWidget(self.name_food_drinck_combo, 0, 0)
+
+
+        label = QLabel('نوع الطلب')
+        label.setStyleSheet('''
+                color: #1A3654;
+                text-align: right;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+            ''')
+        add_frame_layout.addWidget(label,1,1)
+
+        self.order_tayp = QComboBox()
+        self.order_tayp.setStyleSheet('''
+                border-radius: 4px; 
+                background: #1A3654;
+                color: #fff;
+
+            ''')
+        add_frame_layout.addWidget(self.order_tayp,1,0)
+
+        label = QLabel('الصالة')
+        label.setStyleSheet('''
+                color: #1A3654;
+                text-align: right;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+            ''')
+        add_frame_layout.addWidget(label,2,1)
+        
+        self.order_to_hall = QComboBox()
+        self.order_to_hall.setStyleSheet('''
+                border-radius: 4px; 
+                background: #1A3654;
+                color: #fff;
+
+            ''')
+        add_frame_layout.addWidget(self.order_to_hall,2,0)
+
+
+        label = QLabel('الطاولة')
+        label.setStyleSheet('''
+                color: #1A3654;
+                text-align: right;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+            ''')
+        add_frame_layout.addWidget(label,3,1)
+        
+        self.order_to_tabel = QComboBox()
+        self.order_to_tabel.setStyleSheet('''
+                border-radius: 4px; 
+                background: #1A3654;
+                color: #fff;
+
+            ''')
+        add_frame_layout.addWidget(self.order_to_tabel,3,0)
+
+
+        button1 = QPushButton()
+        button1.setStyleSheet('''
+                border-radius: 4px;
+                background: #50F296;
+                color: #1A3654;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                background-image: url('./static/حفظ.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            ''')
+        
+        add_frame_layout.addWidget(button1,4,0,1,2)
+
+
+        button2 = QPushButton()
+        button2.setStyleSheet('''
+                border-radius: 4px;
+                background: #50F296;
+                color: #1A3654;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                background-image: url('./static/جديد.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            ''')
+        
+        add_frame_layout.addWidget(button2,5,0,1,2)
+
+
+        button2 = QPushButton()
+        button2.setStyleSheet('''
+                border-radius: 4px;
+                background: #50F296;
+                color: #1A3654;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                background-image: url('./static/حذف.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            ''')
+        
+        add_frame_layout.addWidget(button2,6,0,1,2)
+
+
+class Orders(QMainWindow):
+    def __init__(self, controller):
+        super().__init__()
+        self.controller = controller
+        self.setWindowTitle("الطلبات")
+        self.resize(500, 500)
+        pixmap = QPixmap('./static/ايقونة الطلبات.png')
+        pixmap = pixmap.scaled(32, 32)
+        self.setWindowIcon(QIcon(pixmap))
+
+        main_frame = QFrame()
+        main_frame.setStyleSheet(
+            """
+            QFrame {
+                background-color: #1A3654; 
+            }
+            """
+        )
+
+        layout = QGridLayout(main_frame)
+
+        # Set the central widget properly
+        self.setCentralWidget(main_frame)
+
+
+class Halls(QMainWindow):
+    def __init__(self, controller):
+        super().__init__()
+        self.controller = controller
+        self.setWindowTitle("الصالات")
+        self.resize(500, 500)
+        pixmap = QPixmap('./static/الصالات/ايقونة الصالات.png')
+        pixmap = pixmap.scaled(32, 32)
+        self.setWindowIcon(QIcon(pixmap))
+
+        main_frame = QFrame()
+        main_frame.setStyleSheet(
+            """
+            QFrame {
+                background-color: #1A3654; 
+            }
+            """
+        )
+
+        layout = QGridLayout(main_frame)
+
+        # Set the central widget properly
+        self.setCentralWidget(main_frame)
+
+        header_frame = QFrame()
+
+        header_frame.setStyleSheet("""
+            QFrame {
+                background-color: #50F296; 
+                border-radius: 6px;
+                background-image: url('./static/الصالات/الصالات.png');
+                background-repeat: no-repeat;
+                background-position: right;
+                padding: 100px; 
+            }
+            """)
+
+
+        header_frame.setFixedHeight(40)
+        layout.addWidget(header_frame,0,0,1,0)
+
+
+        frame = QFrame()
+        layout.addWidget(frame,1,1)
+
+        frame_layout = QGridLayout(frame)
+
+        label = QLabel('اسم الصالة')
+        label.setStyleSheet('''
+                color: #FFF;
+                font-family: Inter;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+            ''')
+        frame_layout.addWidget(label,0,1)
+
+        self.hall_name = QLineEdit()
+        self.hall_name.setStyleSheet('''
+                border-radius: 4px;
+                background: #fff;
+            ''')
+        frame_layout.addWidget(self.hall_name,0,0)
+
+
+        button1 = QPushButton()
+        button1.setStyleSheet('''
+                border-radius: 4px;
+                background: #50F296;
+                color: #1A3654;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                background-image: url('./static/حفظ.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            ''')
+        frame_layout.addWidget(button1,1,0,1,2)
+
+
+        button2 = QPushButton()
+        button2.setStyleSheet('''
+                border-radius: 4px;
+                background: #50F296;
+                color: #1A3654;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                background-image: url('./static/جديد.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            ''')
+        frame_layout.addWidget(button2,2,0,1,2)
+
+
+        button3 = QPushButton()
+        button3.setStyleSheet('''
+                border-radius: 4px;
+                background: #50F296;
+                color: #1A3654;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                background-image: url('./static/حذف.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            ''')
+        frame_layout.addWidget(button3,3,0,1,2)
+
+
+
+
+        data_frame = QFrame()
+        data_frame.setStyleSheet('''
+                border-radius: 5px;
+                background: #FFF;
+            ''')
+
+        layout.addWidget(data_frame,1,0)
+
+        layout.setColumnStretch(0,2)
+        layout.setColumnStretch(1,1)
+
+
+class Tabelles(QMainWindow):
+        def __init__(self, controller):
+            super().__init__()
+            self.controller = controller
+            self.setWindowTitle("الطاولات")
+            self.resize(500, 500)
+            pixmap = QPixmap('./static/الصالات/ايقونة الصالات.png')
+            pixmap = pixmap.scaled(32, 32)
+            self.setWindowIcon(QIcon(pixmap))
+    
+            main_frame = QFrame()
+            main_frame.setStyleSheet(
+                """
+                QFrame {
+                    background-color: #1A3654; 
+                }
+                """
+            )
+    
+            layout = QGridLayout(main_frame)
+    
+            # Set the central widget properly
+            self.setCentralWidget(main_frame)
+    
+            header_frame = QFrame()
+    
+            header_frame.setStyleSheet("""
+                QFrame {
+                    background-color: #50F296; 
+                    border-radius: 6px;
+                    background-image: url('./static/الطاولات/الطاولات.png');
+                    background-repeat: no-repeat;
+                    background-position: right;
+                    padding: 100px; 
+                }
+                """)
+    
+    
+            header_frame.setFixedHeight(40)
+            layout.addWidget(header_frame,0,0,1,0)
+    
+    
+            frame = QFrame()
+            layout.addWidget(frame,1,1)
+    
+            frame_layout = QGridLayout(frame)
+    
+            label = QLabel('اسم الصالة')
+            label.setStyleSheet('''
+                    color: #FFF;
+                    font-family: Inter;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                ''')
+            frame_layout.addWidget(label,0,1)
+    
+            self.hall_name = QLineEdit()
+            self.hall_name.setStyleSheet('''
+                    border-radius: 4px;
+                    background: #fff;
+                ''')
+            frame_layout.addWidget(self.hall_name,0,0)
+    
+    
+            button1 = QPushButton()
+            button1.setStyleSheet('''
+                    border-radius: 4px;
+                    background: #50F296;
+                    color: #1A3654;
+                    font-family: Inter;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                    background-image: url('./static/حفظ.png');
+                    background-repeat: no-repeat;
+                    background-position: center;
+                ''')
+            frame_layout.addWidget(button1,1,0,1,2)
+    
+    
+            button2 = QPushButton()
+            button2.setStyleSheet('''
+                    border-radius: 4px;
+                    background: #50F296;
+                    color: #1A3654;
+                    font-family: Inter;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                    background-image: url('./static/جديد.png');
+                    background-repeat: no-repeat;
+                    background-position: center;
+                ''')
+            frame_layout.addWidget(button2,2,0,1,2)
+    
+    
+            button3 = QPushButton()
+            button3.setStyleSheet('''
+                    border-radius: 4px;
+                    background: #50F296;
+                    color: #1A3654;
+                    font-family: Inter;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                    background-image: url('./static/حذف.png');
+                    background-repeat: no-repeat;
+                    background-position: center;
+                ''')
+            frame_layout.addWidget(button3,3,0,1,2)
+    
+    
+    
+    
+            data_frame = QFrame()
+            data_frame.setStyleSheet('''
+                    border-radius: 5px;
+                    background: #FFF;
+                ''')
+    
+            layout.addWidget(data_frame,1,0)
+    
+            layout.setColumnStretch(0,2)
+            layout.setColumnStretch(1,1)

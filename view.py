@@ -1,5 +1,5 @@
 from PySide6.QtGui import QScreen, QIcon, QPixmap
-from PySide6.QtWidgets import QGridLayout, QMainWindow, QApplication, QFrame, QPushButton, QSizePolicy, QLabel, QLineEdit,  QComboBox, QWidget
+from PySide6.QtWidgets import QGridLayout, QMainWindow, QApplication, QFrame, QPushButton, QSizePolicy, QLabel, QLineEdit,  QComboBox, QVBoxLayout , QHBoxLayout, QSpinBox
 from PySide6.QtCore import Qt, QSize
 
 
@@ -80,6 +80,7 @@ class MyApp(QMainWindow):
         icon = QIcon('./static/Polygon 7.svg')  # Replace with your icon path
 
         button1 = QPushButton()
+        button1.clicked.connect(self.controller.add_prudact)
         button1.setStyleSheet("""
             QPushButton {
                 background-color: #FFF;
@@ -558,10 +559,10 @@ class Orders(QMainWindow):
         super().__init__()
         self.controller = controller
         self.setWindowTitle("الطلبات")
-        self.resize(500, 500)
-        pixmap = QPixmap('./static/ايقونة الطلبات.png')
-        pixmap = pixmap.scaled(32, 32)
-        self.setWindowIcon(QIcon(pixmap))
+        self.resize(750, 750)
+        # pixmap = QPixmap('./static/الطلبات.png')
+        # pixmap = pixmap.scaled(32, 32)
+        # self.setWindowIcon(QIcon(pixmap))
 
         main_frame = QFrame()
         main_frame.setStyleSheet(
@@ -576,6 +577,83 @@ class Orders(QMainWindow):
 
         # Set the central widget properly
         self.setCentralWidget(main_frame)
+
+        header_frame = QFrame()
+
+        header_frame.setStyleSheet("""
+            QFrame {
+                background-color: #50F296; 
+                border-radius: 6px;
+                background-image: url('./static/الطلبات/Group 12.png');
+                background-repeat: no-repeat;
+                background-position: right;
+                padding: 100px; 
+            }
+            """)
+
+
+        header_frame.setFixedHeight(60)
+        layout.addWidget(header_frame,0,0)
+
+        frame = QFrame()
+        layout.addWidget(frame,1,0)
+
+        frame_layout = QGridLayout(frame)
+
+        add_frame = QFrame()
+        frame_layout.addWidget(add_frame, 0,2)
+        
+        add_frame_layout = QVBoxLayout(add_frame)
+
+        button1 = QPushButton()
+        button1.setStyleSheet('''
+                border-radius: 4px;
+                background: #50F296;
+                color: #1A3654;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                background-image: url('./static/الطلبات/Group 13.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            ''')
+        button1.setFixedHeight(50)
+        add_frame_layout.addWidget(button1)
+
+        button2 = QPushButton()
+        button2.setStyleSheet('''
+                border-radius: 4px;
+                background: #50F296;
+                color: #1A3654;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                background-image: url('./static/الطلبات/Group 14.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            ''')
+        button2.setFixedHeight(50)
+        add_frame_layout.addWidget(button2)
+
+        data_frame = QFrame()
+        frame_layout.addWidget(data_frame,0,1)
+
+        data_frame.setStyleSheet(
+             """background: #fff;"""
+        )
+
+
+        bill_frame = QFrame()
+        frame_layout.addWidget(bill_frame,0,0)
+
+
+
+
+
 
 
 class Halls(QMainWindow):
@@ -756,7 +834,7 @@ class Tabelles(QMainWindow):
     
             frame_layout = QGridLayout(frame)
     
-            label = QLabel('اسم الصالة')
+            label = QLabel('رقم الطاولة')
             label.setStyleSheet('''
                     color: #FFF;
                     font-family: Inter;
@@ -767,13 +845,31 @@ class Tabelles(QMainWindow):
                 ''')
             frame_layout.addWidget(label,0,1)
     
-            self.hall_name = QLineEdit()
+            self.taebal_name = QSpinBox()
+            self.taebal_name.setStyleSheet('''
+                    border-radius: 4px;
+                    background: #fff;
+                ''')
+            frame_layout.addWidget(self.taebal_name,0,0)
+    
+
+            label = QLabel('اسم الصالة')
+            label.setStyleSheet('''
+                    color: #FFF;
+                    font-family: Inter;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                ''')
+            frame_layout.addWidget(label,1,1)
+    
+            self.hall_name = QComboBox()
             self.hall_name.setStyleSheet('''
                     border-radius: 4px;
                     background: #fff;
                 ''')
-            frame_layout.addWidget(self.hall_name,0,0)
-    
+            frame_layout.addWidget(self.hall_name,1,0)
     
             button1 = QPushButton()
             button1.setStyleSheet('''
@@ -789,7 +885,7 @@ class Tabelles(QMainWindow):
                     background-repeat: no-repeat;
                     background-position: center;
                 ''')
-            frame_layout.addWidget(button1,1,0,1,2)
+            frame_layout.addWidget(button1,2,0,1,2)
     
     
             button2 = QPushButton()
@@ -806,7 +902,7 @@ class Tabelles(QMainWindow):
                     background-repeat: no-repeat;
                     background-position: center;
                 ''')
-            frame_layout.addWidget(button2,2,0,1,2)
+            frame_layout.addWidget(button2,3,0,1,2)
     
     
             button3 = QPushButton()
@@ -823,7 +919,7 @@ class Tabelles(QMainWindow):
                     background-repeat: no-repeat;
                     background-position: center;
                 ''')
-            frame_layout.addWidget(button3,3,0,1,2)
+            frame_layout.addWidget(button3,4,0,1,2)
     
     
     
@@ -838,3 +934,147 @@ class Tabelles(QMainWindow):
     
             layout.setColumnStretch(0,2)
             layout.setColumnStretch(1,1)
+
+
+class AddProdect(QMainWindow):
+        def __init__(self, controller):
+            super().__init__()
+            self.controller = controller
+            self.setWindowTitle("الطاولات")
+            self.resize(500, 500)
+            pixmap = QPixmap('./static/اضافة مواد/noun-add-7163783-1A3654 1.png')
+            pixmap = pixmap.scaled(32, 32)
+            self.setWindowIcon(QIcon(pixmap))
+    
+            main_frame = QFrame()
+            main_frame.setStyleSheet(
+                """
+                QFrame {
+                    background-color: #1A3654; 
+                }
+                """
+            )
+    
+            layout = QGridLayout(main_frame)
+    
+            # Set the central widget properly
+            self.setCentralWidget(main_frame)
+    
+            header_frame = QFrame()
+    
+            header_frame.setStyleSheet("""
+                QFrame {
+                    background-color: #50F296; 
+                    border-radius: 6px;
+                    background-image: url('./static/اضافة مواد/Group 11.png');
+                    background-repeat: no-repeat;
+                    background-position: right;
+                    padding: 100px; 
+                }
+                """)
+    
+    
+            header_frame.setFixedHeight(40)
+            layout.addWidget(header_frame,0,0,1,0)    
+
+            frame = QFrame()
+            
+
+            layout.addWidget(frame,1,0)
+            layout_frame = QGridLayout(frame)
+
+            add_frame = QFrame()
+
+            add_frame_layout = QGridLayout(add_frame)
+
+            label = QLabel('اسم المادة')
+            label.setStyleSheet(
+                 """color: #FFF;
+                    font-family: Inter;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;""")
+            
+            add_frame_layout.addWidget(label,0,1)
+
+
+            self.add_prodact_name = QLineEdit()
+            self.add_prodact_name.setStyleSheet(
+                 """
+                    background: #FFF;
+                """
+            )
+            add_frame_layout.addWidget(self.add_prodact_name,0,0)
+
+
+            button1 = QPushButton()
+            button1.setStyleSheet('''
+                    border-radius: 4px;
+                    background: #50F296;
+                    color: #1A3654;
+                    font-family: Inter;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                    background-image: url('./static/حفظ.png');
+                    background-repeat: no-repeat;
+                    background-position: center;
+                ''')
+            add_frame_layout.addWidget(button1,1,0,1,2)
+    
+    
+            button2 = QPushButton()
+            button2.setStyleSheet('''
+                    border-radius: 4px;
+                    background: #50F296;
+                    color: #1A3654;
+                    font-family: Inter;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                    background-image: url('./static/جديد.png');
+                    background-repeat: no-repeat;
+                    background-position: center;
+                ''')
+            add_frame_layout.addWidget(button2,2,0,1,2)
+    
+    
+            button3 = QPushButton()
+            button3.setStyleSheet('''
+                    border-radius: 4px;
+                    background: #50F296;
+                    color: #1A3654;
+                    font-family: Inter;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                    background-image: url('./static/حذف.png');
+                    background-repeat: no-repeat;
+                    background-position: center;
+                ''')
+            add_frame_layout.addWidget(button3,3,0,1,2)
+
+
+            
+            data_frame = QFrame()
+            data_frame.setStyleSheet(
+                """
+                QFrame {
+                    background-color: #fff; 
+                    border-radius: 6px;
+                }
+                """
+            )
+
+            layout_frame.addWidget(data_frame, 0, 0)
+            layout_frame.addWidget(add_frame, 0, 1)
+
+            layout_frame.setColumnStretch(0,4)
+            layout_frame.setColumnStretch(1,1)
+
+        
+

@@ -1,5 +1,5 @@
 from model import Model
-from view import MyApp, AddOrderPage, Orders, Halls, Tabelles
+from view import MyApp, AddOrderPage, Orders, Halls, Tabelles, AddProdect
 
 class Controller:
     def __init__(self):
@@ -8,13 +8,10 @@ class Controller:
 
     def add_order_button_clicked(self):
         # عند النقر على زر "إضافة طلب" نعرض نافذة جديدة
-        self.show_add_order_page()
-
-
-    def show_add_order_page(self):
-        # نافذة جديدة لصفحة إضافة الطلب
         self.add_order_window = AddOrderPage(self)
         self.add_order_window.show()
+
+        
 
     def show_orders_page(self):
         # نافذة جديدة لصفحة إضافة الطلب
@@ -31,4 +28,9 @@ class Controller:
         # نافذة جديدة لصفحة إضافة الطلب
         self.add_order_window = Tabelles(self)
         self.add_order_window.show()
+
+    def add_prudact(self):
+        self.add_prudact_window = AddProdect(self)
+        self.add_prudact_window.show()
+        
     

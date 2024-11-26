@@ -145,6 +145,7 @@ class MyApp(QMainWindow):
         layout_frame1.addWidget(button3, 0, 2)
 
         button4 = QPushButton()
+        button4.clicked.connect(self.controller.data_show)
         button4.setStyleSheet('''QPushButton {
                 background-color: #FFF;
                 font-size: 16px;
@@ -1130,7 +1131,7 @@ class Storeg(QMainWindow):
         add_frame_layout = QGridLayout(add_frame)
 
 
-        lable = QLabel("البحث")
+        lable = QLabel("القسم")
         lable.setStyleSheet(
              """color: #FFF;
                 font-family: Inter;
@@ -1141,6 +1142,31 @@ class Storeg(QMainWindow):
                         )
         add_frame_layout.addWidget(lable,0,1)
 
+        self.class_food = QComboBox()
+        self.class_food.setStyleSheet('''
+                border-radius: 4px; 
+                background: #fff;
+                color: #000;
+
+            ''')
+        add_frame_layout.addWidget(self.class_food,0,0)
+
+
+
+        
+
+
+        lable = QLabel("البحث")
+        lable.setStyleSheet(
+             """color: #FFF;
+                font-family: Inter;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;"""
+                        )
+        add_frame_layout.addWidget(lable,1,1)
+
 
         self.serch = QComboBox()
         self.serch.setStyleSheet('''
@@ -1149,7 +1175,7 @@ class Storeg(QMainWindow):
                 color: #000;
 
             ''')
-        add_frame_layout.addWidget(self.serch,0,0)
+        add_frame_layout.addWidget(self.serch,1,0)
 
 
         button1 = QPushButton()
@@ -1167,7 +1193,7 @@ class Storeg(QMainWindow):
                     background-position: center;
                 ''')
         
-        add_frame_layout.addWidget(button1,1,0,1,2)
+        add_frame_layout.addWidget(button1,2,0,1,2)
 
 
 
@@ -1186,6 +1212,110 @@ class Storeg(QMainWindow):
         main_frame_layout.setColumnStretch(1,1)
 
 
+class Data(QMainWindow):
+    def __init__(self, controller):
+        super().__init__()
+        self.controller = controller
+        self.setWindowTitle('لنكيدو')
+
+        main_frame = QFrame(self)
+        layout = QGridLayout(main_frame)
+        self.setCentralWidget(main_frame)
+
+        # إنشاء فريم علوي
+        frame = QFrame()
+        layout_frame = QGridLayout(frame)
+        frame.setStyleSheet("""
+            QFrame {
+                background-color: #1A3654;
+            }
+        """)
+
+        label = QLabel('لنكيدو')
+        label.setStyleSheet("""
+            QLabel {
+                color: #50F296;
+                font-size: 50px;
+                font-weight: bold;
+            }
+        """)
+        label.setAlignment(Qt.AlignCenter)
+        layout_frame.addWidget(label, 0, 0)
+
+        label = QLabel('RESTAURANT <span style="color: #50F296;">&</span> CAFE')
+        label.setStyleSheet("""
+            QLabel {
+                color: #fff;
+                font-size: 50px;
+                font-weight: bold;
+            }
+        """)
+        label.setAlignment(Qt.AlignCenter)
+        layout_frame.addWidget(label, 1, 0)
+
+        layout.addWidget(frame, 0, 0)
+        layout.setRowStretch(0, 1)
+
+        # إنشاء فريم يحتوي على شبكة الأزرار
+        frame1 = QFrame()
+        layout_frame1 = QGridLayout(frame1)
+        frame1.setStyleSheet("""
+            QFrame {
+                background-color: #fff;
+            }
+        """)
+
+        layout_frame1.setSpacing(10)
+        layout_frame1.setContentsMargins(10, 10, 10, 10)
+
+        # إنشاء الأزرار
+        icon = QIcon('./static/Polygon 7.svg')  # تأكد من صحة المسار
+
+        button1 = QPushButton()
+        button1.clicked.connect(self.controller.add_prudact)
+        button1.setStyleSheet("""
+            QPushButton {
+                background-color: #FFF;
+                font-size: 16px;
+                border-radius: 5px;
+                padding: 10px;
+                background-image: url('./static/اضافة مواد.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            QPushButton:hover {
+                background-color: #E9FDF2;
+            }
+        """)
+        button1.setIcon(icon)
+        button1.setIconSize(QSize(250, 250))
+        button1.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        layout_frame1.addWidget(button1, 0, 0)
+
+        # أزرار أخرى
+        button2 = QPushButton()
+        button2.clicked.connect(self.controller.show_orders_page)
+        button2.setStyleSheet("""
+            QPushButton {
+                background-color: #FFF;
+                font-size: 16px;
+                border-radius: 5px;
+                padding: 10px;
+                background-image: url('./static/الطلبات.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            QPushButton:hover {
+                background-color: #E9FDF2;
+            }
+        """)
+        button2.setIcon(icon)
+        button2.setIconSize(QSize(250, 250))
+        button2.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        layout_frame1.addWidget(button2, 0, 1)
+
+        layout.addWidget(frame1, 1, 0)
+        layout.setRowStretch(1, 2)
 
 
          

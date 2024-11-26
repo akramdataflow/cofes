@@ -1,5 +1,5 @@
 from model import Model
-from view import MyApp, AddOrderPage, Orders, Halls, Tabelles, AddProdect, Storeg
+from view import MyApp, AddOrderPage, Orders, Halls, Tabelles, AddProdect, Storeg, Data
 
 class Controller:
     def __init__(self):
@@ -36,6 +36,11 @@ class Controller:
     def storeg(self):
         self.storeg_show = Storeg(self)
         self.storeg_show.show()
+
+    def data_show(self):
+        self.data = Data(self)
+        self.data.show()
+
 
         
     

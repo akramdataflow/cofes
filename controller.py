@@ -1,5 +1,5 @@
 from model import Model
-from view import MyApp, AddOrderPage, Orders, Halls, Tabelles, AddProdect, Storeg, Data
+from view import *
 
 class Controller:
     def __init__(self):
@@ -43,4 +43,11 @@ class Controller:
 
 
         
+    def data_ana(self):
+        self.data = Data_ana(self)
+        self.data.show()
+
     
+    def kitchen (self):
+        self.data = Kitchen(self)
+        self.data.show()

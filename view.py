@@ -164,6 +164,7 @@ class MyApp(QMainWindow):
         layout_frame1.addWidget(button4, 1, 0)
 
         button5 = QPushButton()
+        button5.clicked.connect(self.controller.kitchen)
         button5.setStyleSheet(
             '''QPushButton {
                 background-color: #FFF;
@@ -1272,14 +1273,14 @@ class Data(QMainWindow):
         icon = QIcon('./static/Polygon 7.svg')  # تأكد من صحة المسار
 
         button1 = QPushButton()
-        button1.clicked.connect(self.controller.add_prudact)
+        button1.clicked.connect(self.controller.data_ana)
         button1.setStyleSheet("""
             QPushButton {
                 background-color: #FFF;
                 font-size: 16px;
                 border-radius: 5px;
                 padding: 10px;
-                background-image: url('./static/اضافة مواد.png');
+                background-image: url('./static/Group 17.png');
                 background-repeat: no-repeat;
                 background-position: center;
             }
@@ -1301,7 +1302,7 @@ class Data(QMainWindow):
                 font-size: 16px;
                 border-radius: 5px;
                 padding: 10px;
-                background-image: url('./static/الطلبات.png');
+                background-image: url('./static/Group 18.png');
                 background-repeat: no-repeat;
                 background-position: center;
             }
@@ -1315,8 +1316,21 @@ class Data(QMainWindow):
         layout_frame1.addWidget(button2, 0, 1)
 
         layout.addWidget(frame1, 1, 0)
+        
         layout.setRowStretch(1, 2)
 
 
+class Data_ana(QMainWindow):
+        def __init__(self, controller):
+            super().__init__()
+            self.controller = controller
+            self.setWindowTitle('لنكيدو')
          
 
+class Kitchen(QMainWindow):
+     def __init__(self, controller):
+          super().__init__()
+          self.controller = controller
+          self.setWindowTitle('لنكيدو')
+          
+        

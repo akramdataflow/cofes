@@ -1328,9 +1328,41 @@ class Data_ana(QMainWindow):
          
 
 class Kitchen(QMainWindow):
-     def __init__(self, controller):
-          super().__init__()
-          self.controller = controller
-          self.setWindowTitle('لنكيدو')
+    def __init__(self,controller):
+        super().__init__()
+        self.controller = controller
+        self.setWindowTitle("المخزن")
+        pixmap = QPixmap('./static/المطبخ/noun-kitchen-7162636-1A3654 1.png')
+        pixmap = pixmap.scaled(32, 32)
+        self.setWindowIcon(QIcon(pixmap))
+        self.resize(500,500)
+
+
+        main_frame = QFrame()
+        main_frame.setStyleSheet("""background-color: #1A3654;""")
+        self.setCentralWidget(main_frame)
+
+
+        main_frame_layout = QGridLayout(main_frame)
+         
+        header = QFrame()
+        header.setStyleSheet(
+             """border-radius: 6px;
+                background: #50F296;
+                background-image: url('./static/المطبخ/Group 19.png');
+                background-repeat: no-repeat;
+                background-position: right;
+                """
+        )
+
+        header.setFixedHeight(40)
+        main_frame_layout.addWidget(header,0,0,1,2)
+
+        frame = QFrame()
+        main_frame_layout.addWidget(frame,1,0)
+        frame_layout = QGridLayout(frame)
+        add_frame = QFrame()
+        frame_layout.addWidget(add_frame,0,1)
+        label = QLabel('المطبخ')
           
         

@@ -696,7 +696,6 @@ class Addprodact(QMainWindow):
         add_frame_layout.addWidget(save_frame,3,0,1,2)
 
 
-
 class Halls(QMainWindow):
     def __init__(self, controller):
         super().__init__()

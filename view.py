@@ -109,7 +109,7 @@ class MyApp(QMainWindow):
                 font-size: 16px;
                 border-radius: 5px;
                 padding: 10px;
-                background-image: url('./static/الطلبات.png');
+                background-image: url('./static/Group 22.png');
                 background-repeat: no-repeat;
                 background-position: center;
     }
@@ -555,7 +555,7 @@ class AddOrderPage(QMainWindow):
         add_frame_layout.addWidget(button2,6,0,1,2)
 
 
-class Orders(QMainWindow):
+class Addprodact(QMainWindow):
     def __init__(self, controller):
         super().__init__()
         self.controller = controller
@@ -585,7 +585,7 @@ class Orders(QMainWindow):
             QFrame {
                 background-color: #50F296; 
                 border-radius: 6px;
-                background-image: url('./static/الطلبات/Group 12.png');
+                background-image: url('./static/منتج جديد/Group 23.png');
                 background-repeat: no-repeat;
                 background-position: right;
                 padding: 100px; 
@@ -599,29 +599,83 @@ class Orders(QMainWindow):
         frame = QFrame()
         layout.addWidget(frame,1,0)
 
-        frame_layout = QGridLayout(frame)
-
-        add_frame = QFrame()
-        frame_layout.addWidget(add_frame, 0,2)
-        
-        add_frame_layout = QVBoxLayout(add_frame)
-
-        button1 = QPushButton()
-        button1.setStyleSheet('''
-                border-radius: 4px;
-                background: #50F296;
-                color: #1A3654;
+        add_frame_layout = QGridLayout(frame)
+        label = QLabel('اسم المنتج')
+        label.setStyleSheet('''
+                color: #FFF;
                 font-family: Inter;
-                font-size: 16px;
+                font-size: 14px;
                 font-style: normal;
                 font-weight: 700;
                 line-height: normal;
-                background-image: url('./static/الطلبات/Group 13.png');
-                background-repeat: no-repeat;
-                background-position: center;
             ''')
-        button1.setFixedHeight(50)
-        add_frame_layout.addWidget(button1)
+        add_frame_layout.addWidget(label,0,1)
+
+        self.product_name = QLineEdit()
+        self.product_name.setStyleSheet('''
+                border-radius: 4px; 
+                background: #fff;
+                color: #000;
+            ''')
+        add_frame_layout.addWidget(self.product_name,0,0)
+
+        label = QLabel('المطبخ')
+        label.setStyleSheet('''
+                color: #FFF;
+                font-family: Inter;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+            ''')
+        add_frame_layout.addWidget(label,1,1)
+
+        self.kitchen = QComboBox()
+        self.kitchen.setStyleSheet('''
+                border-radius: 4px; 
+                background: #fff;
+                color: #000;
+            ''')
+        add_frame_layout.addWidget(self.kitchen,1,0)
+
+        label = QLabel('السعر')
+        label.setStyleSheet('''
+                color: #FFF;
+                font-family: Inter;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+            ''')
+        
+        add_frame_layout.addWidget(label,2,1)
+
+        self.price = QSpinBox()
+        self.price.setStyleSheet('''
+                    border-radius: 4px;
+                    background: #fff;
+                ''')
+        add_frame_layout.addWidget(self.price,2,0)
+
+
+        save_frame = QFrame()
+        save_frame_layout = QGridLayout(save_frame)
+
+        button1 = QPushButton()
+        button1.setStyleSheet('''
+                    border-radius: 4px;
+                    background: #50F296;
+                    color: #1A3654;
+                    font-family: Inter;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                    background-image: url('./static/حفظ.png');
+                    background-repeat: no-repeat;
+                    background-position: center;
+            ''')
+        save_frame_layout.addWidget(button1,0,0)
 
         button2 = QPushButton()
         button2.setStyleSheet('''
@@ -633,23 +687,14 @@ class Orders(QMainWindow):
                 font-style: normal;
                 font-weight: 700;
                 line-height: normal;
-                background-image: url('./static/الطلبات/Group 14.png');
+                background-image: url('./static/جديد.png');
                 background-repeat: no-repeat;
                 background-position: center;
             ''')
-        button2.setFixedHeight(50)
-        add_frame_layout.addWidget(button2)
+        save_frame_layout.addWidget(button2,1,0)
 
-        data_frame = QFrame()
-        frame_layout.addWidget(data_frame,0,1)
+        add_frame_layout.addWidget(save_frame,3,0,1,2)
 
-        data_frame.setStyleSheet(
-             """background: #fff;"""
-        )
-
-
-        bill_frame = QFrame()
-        frame_layout.addWidget(bill_frame,0,0)
 
 
 class Halls(QMainWindow):
@@ -1093,6 +1138,7 @@ class AddProdect(QMainWindow):
 
             layout_frame.setColumnStretch(0,4)
             layout_frame.setColumnStretch(1,1)
+
 
 class Storeg(QMainWindow):
     def __init__(self,controller):

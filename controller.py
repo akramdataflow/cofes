@@ -15,7 +15,7 @@ class Controller:
 
     def show_orders_page(self):
         # نافذة جديدة لصفحة إضافة الطلب
-        self.add_order_window = Orders(self)
+        self.add_order_window = Addprodact(self)
         self.add_order_window.show()
 
     def show_halls_page(self):

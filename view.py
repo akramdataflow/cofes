@@ -109,7 +109,11 @@ class MyApp(QMainWindow):
                 font-size: 16px;
                 border-radius: 5px;
                 padding: 10px;
+<<<<<<< Updated upstream
                 background-image: url('./static/Group 22.png');
+=======
+                background-image: url('./static/Group 24.png');
+>>>>>>> Stashed changes
                 background-repeat: no-repeat;
                 background-position: center;
     }

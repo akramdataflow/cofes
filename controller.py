@@ -1,3 +1,4 @@
+import sqlite3
 from model import Model
 from view import *
 
@@ -5,6 +6,7 @@ class Controller:
     def __init__(self):
         self.model = Model()
         self.view = MyApp(self)
+        self.halls = Halls(self)
 
     def add_order_button_clicked(self):
         # عند النقر على زر "إضافة طلب" نعرض نافذة جديدة
@@ -51,3 +53,17 @@ class Controller:
     def kitchen (self):
         self.data = Kitchen(self)
         self.data.show()
+
+    def add_hall(self):
+        hall_name = self.halls.hall_name.text()
+        # الاتصال بقاعدة البيانات
+        conn = sqlite3.connect('C:/Users/Kstore/Documents/GitHub/cofes/data.db')
+        cursor = conn.cursor()
+
+        # إدخال بيانات في جدول Hall
+        cursor.execute("INSERT INTO Hall (name) VALUES (?)", (hall_name,))
+
+        # حفظ التغييرات وإغلاق الاتصال
+        conn.commit()
+        conn.close()
+        print(f"Hall '{hall_name}' added successfully!")

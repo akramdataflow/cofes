@@ -767,6 +767,7 @@ class Halls(QMainWindow):
 
 
         button1 = QPushButton()
+        button1.clicked.connect(self.controller.add_hall)
         button1.setStyleSheet('''
                 border-radius: 4px;
                 background: #50F296;
@@ -793,28 +794,11 @@ class Halls(QMainWindow):
                 font-style: normal;
                 font-weight: 700;
                 line-height: normal;
-                background-image: url('./static/جديد.png');
-                background-repeat: no-repeat;
-                background-position: center;
-            ''')
-        frame_layout.addWidget(button2,2,0,1,2)
-
-
-        button3 = QPushButton()
-        button3.setStyleSheet('''
-                border-radius: 4px;
-                background: #50F296;
-                color: #1A3654;
-                font-family: Inter;
-                font-size: 16px;
-                font-style: normal;
-                font-weight: 700;
-                line-height: normal;
                 background-image: url('./static/حذف.png');
                 background-repeat: no-repeat;
                 background-position: center;
             ''')
-        frame_layout.addWidget(button3,3,0,1,2)
+        frame_layout.addWidget(button2,3,0,1,2)
 
 
 

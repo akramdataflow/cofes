@@ -3,7 +3,7 @@ import sqlite3
 # دالة لإنشاء قاعدة البيانات والجداول
 def init_db():
     # الاتصال بقاعدة البيانات (إذا لم تكن موجودة، سيتم إنشاؤها)
-    conn = sqlite3.connect('C:/Users/Kstore/Documents/GitHub/cofes/data.db')  # تحديد مسار قاعدة البيانات
+    conn = sqlite3.connect('data.db')  # تحديد مسار قاعدة البيانات
     cursor = conn.cursor()  # إنشاء كائن المؤشر
 
     # إنشاء جدول Hall
@@ -27,7 +27,6 @@ def init_db():
     # حفظ التغييرات وإغلاق الاتصال
     conn.commit()
     conn.close()
-    print("Database initialized!")
 
 # استدعاء الدالة لإنشاء قاعدة البيانات والجداول
 if __name__ == "__main__":

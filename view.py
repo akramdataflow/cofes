@@ -1,6 +1,7 @@
-from PySide6.QtGui import QScreen, QIcon, QPixmap
-from PySide6.QtWidgets import QGridLayout, QMainWindow, QApplication, QFrame, QPushButton, QSizePolicy, QLabel, QLineEdit,  QComboBox, QVBoxLayout , QHBoxLayout, QSpinBox, QWidget
+from PySide6.QtGui import QScreen, QIcon, QPixmap, QIntValidator
+from PySide6.QtWidgets import QGridLayout, QMainWindow, QApplication, QFrame, QPushButton, QSizePolicy, QLabel, QLineEdit,  QComboBox, QSpinBox
 from PySide6.QtCore import Qt, QSize
+import sqlite3
 
 
 class MyApp(QMainWindow):
@@ -877,7 +878,7 @@ class Tabelles(QMainWindow):
                 ''')
             frame_layout.addWidget(label,0,1)
     
-            self.taebal_name = QSpinBox()
+            self.taebal_name = QLineEdit(self)
             self.taebal_name.setStyleSheet('''
                     border-radius: 4px;
                     background: #fff;
@@ -896,11 +897,15 @@ class Tabelles(QMainWindow):
                 ''')
             frame_layout.addWidget(label,1,1)
     
+            
+    
             self.hall_name = QComboBox()
+            self.hall_name.setEditable(True)
             self.hall_name.setStyleSheet('''
                     border-radius: 4px;
                     background: #fff;
                 ''')
+            self.hall_name.addItems(self.controller.get_hall_name_from_model())
             frame_layout.addWidget(self.hall_name,1,0)
     
             button1 = QPushButton()
@@ -966,6 +971,7 @@ class Tabelles(QMainWindow):
     
             layout.setColumnStretch(0,2)
             layout.setColumnStretch(1,1)
+            
 
 
 class AddProdect(QMainWindow):

@@ -8,6 +8,12 @@ class Controller:
         self.view = MyApp(self)
         self.halls = Halls(self)
 
+        
+
+
+
+
+
     def add_order_button_clicked(self):
         # عند النقر على زر "إضافة طلب" نعرض نافذة جديدة
         self.add_order_window = AddOrderPage(self)
@@ -55,7 +61,7 @@ class Controller:
         self.data.show()
 
     def add_hall(self, hall_name):
-        conn = sqlite3.connect('C:/Users/Kstore/Documents/GitHub/cofes/data.db')
+        conn = sqlite3.connect('data.db')
         cursor = conn.cursor()
 
         # إدخال بيانات في جدول Hall
@@ -65,3 +71,13 @@ class Controller:
         conn.commit()
         conn.close()
         print(f"Hall '{hall_name}' added successfully!")
+
+    def get_hall_name_from_model(self):
+        hall_name = self.model.get_hall_name()
+        return hall_name
+        
+
+
+
+
+    

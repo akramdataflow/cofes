@@ -758,7 +758,7 @@ class Halls(QMainWindow):
             ''')
         frame_layout.addWidget(label,0,1)
 
-        self.hall_name = QLineEdit()
+        self.hall_name = QLineEdit(self)
         self.hall_name.setStyleSheet('''
                 border-radius: 4px;
                 background: #fff;
@@ -767,7 +767,7 @@ class Halls(QMainWindow):
 
 
         button1 = QPushButton()
-        button1.clicked.connect(self.controller.add_hall)
+        button1.clicked.connect(self.send_hall_name_to_controller)
         button1.setStyleSheet('''
                 border-radius: 4px;
                 background: #50F296;
@@ -813,6 +813,10 @@ class Halls(QMainWindow):
 
         layout.setColumnStretch(0,2)
         layout.setColumnStretch(1,1)
+
+    def send_hall_name_to_controller(self):
+        hall_name = self.hall_name.text()
+        self.controller.add_hall(hall_name)
 
 
 class Tabelles(QMainWindow):

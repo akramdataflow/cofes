@@ -54,9 +54,7 @@ class Controller:
         self.data = Kitchen(self)
         self.data.show()
 
-    def add_hall(self):
-        hall_name = self.halls.hall_name.text()
-        # الاتصال بقاعدة البيانات
+    def add_hall(self, hall_name):
         conn = sqlite3.connect('C:/Users/Kstore/Documents/GitHub/cofes/data.db')
         cursor = conn.cursor()
 

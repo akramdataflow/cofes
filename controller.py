@@ -75,6 +75,13 @@ class Controller:
     def get_hall_name_from_model(self):
         hall_name = self.model.get_hall_name()
         return hall_name
+    
+    
+    
+    def save_tabel_to_data(self, tabel_name, hall_name):
+        model_instance = Model()  # إنشاء كائن Model
+        model_instance.save_tabel_name(tabel_name=tabel_name, hall_name=hall_name)
+
         
 
 

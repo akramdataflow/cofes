@@ -909,6 +909,7 @@ class Tabelles(QMainWindow):
             frame_layout.addWidget(self.hall_name,1,0)
     
             button1 = QPushButton()
+            button1.clicked.connect(self.controller.save_tabel_to_data)
             button1.setStyleSheet('''
                     border-radius: 4px;
                     background: #50F296;
@@ -971,6 +972,13 @@ class Tabelles(QMainWindow):
     
             layout.setColumnStretch(0,2)
             layout.setColumnStretch(1,1)
+
+        def taebal_name_get(self):
+             taebal_name = self.taebal_name
+             hall_name = self.hall_name
+             self.controller.save_tabel_to_data(taebal_name=taebal_name,hall_name=hall_name)
+             
+             
             
 
 

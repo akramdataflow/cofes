@@ -18,9 +18,9 @@ def init_db():
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS Tabel (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        number_of_tabel INTEGER NOT NULL,
-        hall_id INTEGER,
-        FOREIGN KEY(hall_id) REFERENCES Hall(id)
+        name_tabel TEXT UNIQUE NOT NULL,
+        hall_name TEXT,
+        FOREIGN KEY(hall_name) REFERENCES Hall(name)
     )
     ''')
 

@@ -38,7 +38,7 @@ class Controller:
         self.add_order_window.show()
 
     def add_prudact(self):
-        self.add_prudact_window = AddProdect(self)
+        self.add_prudact_window = Addmaterial(self)
         self.add_prudact_window.show()
 
     def storeg(self):
@@ -76,11 +76,22 @@ class Controller:
         hall_name = self.model.get_hall_name()
         return hall_name
     
+    def get_tabel_name_from_model(self):
+        tabel_name  = self.model.get_tabel_name()
+        return tabel_name
     
     
-    def save_tabel_to_data(self, tabel_name, hall_name):
-        model_instance = Model()  # إنشاء كائن Model
-        model_instance.save_tabel_name(tabel_name=tabel_name, hall_name=hall_name)
+    def add_tabel(self,tabel_name, hall_name):
+        self.model.save_tabel_name(tabel_name,hall_name)
+
+    def add_Material_to_storeg(self,name,count):
+        self.model.add_material(name,count)
+
+    def get_material_from_maoel(self):
+        name, count = self.model.get_Material()
+        return name,count
+        
+    
 
         
 

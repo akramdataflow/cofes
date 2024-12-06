@@ -1,5 +1,5 @@
 from PySide6.QtGui import QScreen, QIcon, QPixmap, QIntValidator
-from PySide6.QtWidgets import QGridLayout, QMainWindow, QApplication, QFrame, QPushButton, QSizePolicy, QLabel, QLineEdit,  QComboBox, QSpinBox
+from PySide6.QtWidgets import QGridLayout, QMainWindow, QApplication, QFrame, QPushButton, QSizePolicy, QLabel, QLineEdit,  QComboBox, QSpinBox, QVBoxLayout, QTableWidget, QTableWidgetItem, QVBoxLayout
 from PySide6.QtCore import Qt, QSize
 import sqlite3
 
@@ -110,11 +110,7 @@ class MyApp(QMainWindow):
                 font-size: 16px;
                 border-radius: 5px;
                 padding: 10px;
-<<<<<<< Updated upstream
-                background-image: url('./static/Group 22.png');
-=======
                 background-image: url('./static/Group 24.png');
->>>>>>> Stashed changes
                 background-repeat: no-repeat;
                 background-position: center;
     }
@@ -805,12 +801,44 @@ class Halls(QMainWindow):
 
 
         data_frame = QFrame()
+        data_frame_layout = QGridLayout(data_frame)
+
         data_frame.setStyleSheet('''
                 border-radius: 5px;
                 background: #FFF;
             ''')
 
         layout.addWidget(data_frame,1,0)
+
+        self.hall_name_count = self.controller.get_hall_name_from_model()
+        for index, hall_name in enumerate(self.hall_name_count):
+            # إنشاء الإطار
+            frame_iner = QFrame(self)
+            frame_iner.setStyleSheet(
+                """
+                border-radius: 5px;
+                background: #50F296;
+                """
+            )
+
+            # إعداد التخطيط العمودي داخل الإطار
+            frame_layout = QVBoxLayout(frame_iner)
+
+            # إنشاء النص (اسم الصالة)
+            label = QLabel(hall_name, frame_iner)
+            label.setStyleSheet("font-size: 14px; font-weight: bold; text-align: center;")
+            label.setAlignment(Qt.AlignCenter)  # محاذاة النص في منتصف الإطار
+
+            # إضافة النص إلى التخطيط داخل الإطار
+            frame_layout.addWidget(label)
+
+            # تحديد الصف والعمود
+            row = index // 4  # حساب الصف بناءً على العدد
+            col = index % 4   # حساب العمود بناءً على العدد
+
+            # إضافة الإطار إلى التخطيط الشبكي
+            data_frame_layout.addWidget(frame_iner, row, col)
+
 
         layout.setColumnStretch(0,2)
         layout.setColumnStretch(1,1)
@@ -909,7 +937,7 @@ class Tabelles(QMainWindow):
             frame_layout.addWidget(self.hall_name,1,0)
     
             button1 = QPushButton()
-            button1.clicked.connect(self.controller.save_tabel_to_data)
+            button1.clicked.connect(self.send_tabel_name_to_controller)
             button1.setStyleSheet('''
                     border-radius: 4px;
                     background: #50F296;
@@ -963,26 +991,60 @@ class Tabelles(QMainWindow):
     
     
             data_frame = QFrame()
+            data_frame_layout = QGridLayout(data_frame)
+
             data_frame.setStyleSheet('''
                     border-radius: 5px;
                     background: #FFF;
                 ''')
-    
+
             layout.addWidget(data_frame,1,0)
-    
+
+            # جلب أسماء الطاولات وترتيبها
+            self.tabel_name_count = sorted(self.controller.get_tabel_name_from_model())
+            
+            # إنشاء الإطارات وترتيبها داخل التخطيط
+            for index, tabel_name in enumerate(self.tabel_name_count):
+                # إنشاء الإطار
+                frame_iner = QFrame(self)
+                frame_iner.setStyleSheet(
+                    """
+                    border-radius: 5px;
+                    background: #50F296;
+                    """
+                )
+            
+                # إعداد التخطيط العمودي داخل الإطار
+                frame_layout = QVBoxLayout(frame_iner)
+            
+                # إنشاء النص (اسم الطاولة)
+                label = QLabel(tabel_name, frame_iner)
+                label.setStyleSheet("font-size: 14px; font-weight: bold; text-align: center;")
+                label.setAlignment(Qt.AlignCenter)  # محاذاة النص في منتصف الإطار
+            
+            
+                # إضافة النص إلى التخطيط داخل الإطار
+                frame_layout.addWidget(label)
+            
+                # تحديد الصف والعمود
+                row = index // 4  # حساب الصف بناءً على العدد
+                col = index % 4   # حساب العمود بناءً على العدد
+            
+                # إضافة الإطار إلى التخطيط الشبكي
+                data_frame_layout.addWidget(frame_iner, row, col)
+
+
+
             layout.setColumnStretch(0,2)
             layout.setColumnStretch(1,1)
 
-        def taebal_name_get(self):
-             taebal_name = self.taebal_name
-             hall_name = self.hall_name
-             self.controller.save_tabel_to_data(taebal_name=taebal_name,hall_name=hall_name)
-             
-             
-            
+        def send_tabel_name_to_controller(self):
+            tabel_name = self.taebal_name.text()
+            hall_name = self.hall_name.currentText()
+            self.controller.add_tabel(tabel_name,hall_name)
 
 
-class AddProdect(QMainWindow):
+class Addmaterial(QMainWindow):
         def __init__(self, controller):
             super().__init__()
             self.controller = controller
@@ -991,6 +1053,8 @@ class AddProdect(QMainWindow):
             pixmap = QPixmap('./static/اضافة مواد/noun-add-7163783-1A3654 1.png')
             pixmap = pixmap.scaled(32, 32)
             self.setWindowIcon(QIcon(pixmap))
+
+            self.controller.get_material_from_maoel()
     
             main_frame = QFrame()
             main_frame.setStyleSheet(
@@ -1045,13 +1109,13 @@ class AddProdect(QMainWindow):
             add_frame_layout.addWidget(label,0,1)
 
 
-            self.add_prodact_name = QLineEdit()
-            self.add_prodact_name.setStyleSheet(
+            self.material_name = QLineEdit()
+            self.material_name.setStyleSheet(
                  """
                     background: #FFF;
                 """
             )
-            add_frame_layout.addWidget(self.add_prodact_name,0,0)
+            add_frame_layout.addWidget(self.material_name,0,0)
 
             label = QLabel("العدد")
             label.setStyleSheet(
@@ -1075,6 +1139,7 @@ class AddProdect(QMainWindow):
 
 
             button1 = QPushButton()
+            button1.clicked.connect(self.send_material_to_controller)
             button1.setStyleSheet('''
                     border-radius: 4px;
                     background: #50F296;
@@ -1129,6 +1194,44 @@ class AddProdect(QMainWindow):
 
             
             data_frame = QFrame()
+            data_frame_layout = QVBoxLayout(data_frame)
+            
+            data_tabel = self.controller.get_material_from_maoel()
+            
+            # Create the table widget
+            self.table = QTableWidget()
+
+            self.table.setGeometry(data_frame.geometry())
+
+            
+            # Configure the table
+            self.table.setColumnCount(2)
+            self.table.setHorizontalHeaderLabels(['Name', 'Count'])
+            
+            # Populate the table with data
+            if data_tabel:
+                row_count = len(data_tabel[0])  # Assuming name and count have the same length
+                self.table.setRowCount(row_count)
+            
+                for row in range(row_count):
+                    self.table.setItem(row, 0, QTableWidgetItem(data_tabel[0][row]))  # Insert Name
+                    self.table.setItem(row, 1, QTableWidgetItem(str(data_tabel[1][row])))  # Insert Count)
+            
+            # Resize columns to fit content
+            self.table.resizeColumnsToContents()
+            
+            # Add the table to the frame's layout
+            data_frame_layout.addWidget(self.table)
+            data_frame.setLayout(data_frame_layout)
+
+
+
+
+
+            
+
+
+
             data_frame.setStyleSheet(
                 """
                 QFrame {
@@ -1137,12 +1240,16 @@ class AddProdect(QMainWindow):
                 }
                 """
             )
+            
 
             layout_frame.addWidget(data_frame, 0, 0)
             layout_frame.addWidget(add_frame, 0, 1)
 
             layout_frame.setColumnStretch(0,4)
             layout_frame.setColumnStretch(1,1)
+
+        def send_material_to_controller(self):
+            self.controller.add_Material_to_storeg(self.material_name.text(),self.spin.value())
 
 
 class Storeg(QMainWindow):
@@ -1415,5 +1522,3 @@ class Kitchen(QMainWindow):
         add_frame = QFrame()
         frame_layout.addWidget(add_frame,0,1)
         label = QLabel('المطبخ')
-          
-        

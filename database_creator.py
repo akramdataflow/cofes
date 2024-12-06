@@ -24,6 +24,13 @@ def init_db():
     )
     ''')
 
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Material(
+        name TEXT UNIQUE NOT NULL,
+        count INTEGER NOT NULL
+    )
+    """)
+
     # حفظ التغييرات وإغلاق الاتصال
     conn.commit()
     conn.close()

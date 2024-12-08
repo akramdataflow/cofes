@@ -31,6 +31,14 @@ def init_db():
     )
     """)
 
+    cursor.execute(
+    """
+    CREATE TABLE IF NOT EXISTS Kitchen(
+        name TEXT UNIQUE NOT NULL
+    )
+    """
+    ) 
+
     # حفظ التغييرات وإغلاق الاتصال
     conn.commit()
     conn.close()

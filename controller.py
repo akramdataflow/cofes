@@ -90,7 +90,13 @@ class Controller:
     def get_material_from_maoel(self):
         name, count = self.model.get_Material()
         return name,count
-        
+
+    def add_kitchen_to_model(self,name):
+        self.model.add_kitchen(name)  
+
+    def get_kitchen_from_model(self):
+        name = self.model.get_kitchen()
+        return name
     
 
         

@@ -41,3 +41,20 @@ class Model:
         """, (name,cuont))
         self.conn.commit()
 
+
+    def add_kitchen(self, name):
+        self.cursor.execute(
+            """
+            INSERT INTO Kitchen (name) VALUES (?)
+            """, (name,)  
+        )
+        self.conn.commit()
+
+    def get_kitchen(self):
+        self.cursor.execute('SELECT * FROM Kitchen')
+        rows = self.cursor.fetchall()
+        name = [row[0] for row in rows]
+        return name
+
+
+

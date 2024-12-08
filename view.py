@@ -1038,10 +1038,13 @@ class Tabelles(QMainWindow):
             layout.setColumnStretch(0,2)
             layout.setColumnStretch(1,1)
 
+        
+
         def send_tabel_name_to_controller(self):
             tabel_name = self.taebal_name.text()
             hall_name = self.hall_name.currentText()
             self.controller.add_tabel(tabel_name,hall_name)
+            self.taebal_name.clear()
 
 
 class Addmaterial(QMainWindow):
@@ -1486,39 +1489,147 @@ class Data_ana(QMainWindow):
          
 
 class Kitchen(QMainWindow):
-    def __init__(self,controller):
+    def __init__(self, controller):
         super().__init__()
         self.controller = controller
         self.setWindowTitle("المخزن")
         pixmap = QPixmap('./static/المطبخ/noun-kitchen-7162636-1A3654 1.png')
         pixmap = pixmap.scaled(32, 32)
         self.setWindowIcon(QIcon(pixmap))
-        self.resize(500,500)
-
+        self.resize(1000, 1000)
 
         main_frame = QFrame()
         main_frame.setStyleSheet("""background-color: #1A3654;""")
         self.setCentralWidget(main_frame)
 
-
         main_frame_layout = QGridLayout(main_frame)
-         
+
         header = QFrame()
         header.setStyleSheet(
-             """border-radius: 6px;
-                background: #50F296;
-                background-image: url('./static/المطبخ/Group 19.png');
-                background-repeat: no-repeat;
-                background-position: right;
-                """
+            """border-radius: 6px;
+               background: #50F296;
+               background-image: url('./static/المطبخ/Group 19.png');
+               background-repeat: no-repeat;
+               background-position: right;
+            """
         )
-
         header.setFixedHeight(40)
-        main_frame_layout.addWidget(header,0,0,1,2)
+        main_frame_layout.addWidget(header, 0, 0)
 
         frame = QFrame()
-        main_frame_layout.addWidget(frame,1,0)
+        main_frame_layout.addWidget(frame, 1, 0)
         frame_layout = QGridLayout(frame)
+
+        # Add Frame
         add_frame = QFrame()
-        frame_layout.addWidget(add_frame,0,1)
+        add_frame_layout = QGridLayout()
+        add_frame.setLayout(add_frame_layout)
+        frame_layout.addWidget(add_frame, 0, 1)
+
+        # Add Label
         label = QLabel('المطبخ')
+        label.setStyleSheet("color: white; font-size: 16px;")
+        add_frame_layout.addWidget(label, 0, 1)
+
+        self.kitchen_name = QLineEdit()
+        self.kitchen_name.setStyleSheet('''
+                    border-radius: 4px;
+                    background: #fff;
+                ''')
+        add_frame_layout.addWidget(self.kitchen_name, 0, 0)
+
+        button1 = QPushButton()
+        button1.clicked.connect(self.send_kitchen_name_to_controller)
+        button1.setStyleSheet('''
+                    border-radius: 4px;
+                    background: #50F296;
+                    color: #1A3654;
+                    font-family: Inter;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                    background-image: url('./static/حفظ.png');
+                    background-repeat: no-repeat;
+                    background-position: center;
+            ''')
+        add_frame_layout.addWidget(button1, 1, 0, 1, 2)
+
+        button2 = QPushButton()
+        button2.setStyleSheet('''
+                border-radius: 4px;
+                background: #50F296;
+                color: #1A3654;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                background-image: url('./static/حذف.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            ''')
+        add_frame_layout.addWidget(button2, 2, 0, 1, 2)
+
+        self.data_frame = QFrame()
+        self.data_frame_layout = QGridLayout(self.data_frame)
+        frame_layout.addWidget(self.data_frame, 0, 0)
+        self.data_frame.setStyleSheet(
+            """
+            QFrame {
+                background-color: #fff; 
+                border-radius: 6px;
+            }
+            """
+        )
+
+        frame_layout.setColumnStretch(0, 4)
+        frame_layout.setColumnStretch(1, 1)
+
+        # Load initial data
+        self.load_kitchens()
+
+    def load_kitchens(self):
+        """Load kitchen data into the data_frame."""
+        # Clear previous data
+        while self.data_frame_layout.count():
+            item = self.data_frame_layout.takeAt(0)
+            if item.widget():
+                item.widget().deleteLater()
+
+        self.tabel_name_count = sorted(self.controller.get_kitchen_from_model())
+
+        # Add kitchens to the layout
+        for index, tabel_name in enumerate(self.tabel_name_count):
+            # Create a frame for each kitchen
+            frame_iner = QFrame(self)
+            frame_iner.setStyleSheet(
+                """
+                border-radius: 5px;
+                background: #50F296;
+                """
+            )
+            frame_layout = QVBoxLayout(frame_iner)
+
+            # Add the kitchen name as a label
+            label = QLabel(tabel_name, frame_iner)
+            label.setStyleSheet("font-size: 14px; font-weight: bold; text-align: center;")
+            label.setAlignment(Qt.AlignCenter)
+            frame_layout.addWidget(label)
+
+            # Calculate row and column
+            row = index // 4  # 4 kitchens per row
+            col = index % 4
+
+            self.data_frame_layout.addWidget(frame_iner, row, col)
+
+    def send_kitchen_name_to_controller(self):
+        """Add a new kitchen and reload the data."""
+        new_kitchen = self.kitchen_name.text()
+        if new_kitchen.strip():  # Ensure it's not empty
+            self.controller.add_kitchen_to_model(new_kitchen)
+            self.kitchen_name.clear()
+            self.load_kitchens()
+
+
+

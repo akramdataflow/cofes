@@ -85,11 +85,11 @@ class MyApp(QMainWindow):
         button1.setStyleSheet("""
             QPushButton {
                 background-color: #FFF;
-                font-size: 16px;
                 border-radius: 5px;
                 padding: 10px;
                 background-image: url('./static/اضافة مواد.png');
-                background-repeat: no-repeat;
+               font-size: 16px;
+                 background-repeat: no-repeat;
                 background-position: center;
             }
             QPushButton:hover {
